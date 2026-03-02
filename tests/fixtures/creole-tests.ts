@@ -1,17 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head xmlns="http://www.w3.org/1999/xhtml">
-<title>tests/creole.html</title>
-<script type="text/javascript" src="../lib/creole.js"></script>
-<script type="text/javascript" src="lib/JSAN.js"></script>
-</head>
-<body>
-<pre id="test">
-<script type="text/javascript"><!--<![CDATA[
-var jsan = new JSAN('lib');
-jsan.use('Test.More');
+export interface TestCase {
+  name: string;
+  input: string;
+  output: string;
+  forIE?: boolean;
+  options?: Record<string, unknown>;
+}
 
-var tests = [
+export const tests: TestCase[] = [
   {
     name:   "Basic paragraph markup",
     input:  "Basic paragraph test with <, >, & and \"",
@@ -27,22 +22,22 @@ var tests = [
     input:  "# list item\n#list item 2",
     output: "<ol><li> list item</li>\n<li>list item 2</li></ol>"
   },
-  { // Test an ul item with a sublist
+  {
     name:   "Unordered item with unordered sublist",
     input:  "* Item\n** Subitem",
     output: "<ul><li> Item<ul>\n<li> Subitem</li></ul></li></ul>"
   },
-  { // Test an ol item with a sublist
+  {
     name:   "Ordered item with ordered sublist",
     input:  "# Item\n## Subitem",
     output: "<ol><li> Item<ol>\n<li> Subitem</li></ol></li></ol>"
   },
-  { // Test a sublist without an initial tag (should not make a list)
+  {
     name:   "Ordered sublist without initial tag",
     input:  "## Sublist item",
     output: "<p>## Sublist item</p>"
   },
-  { // Test an unordered list with an ordered sublist
+  {
     name:   "Unordered item with ordered sublist",
     input:  "* Item\n*# Subitem",
     output: "<ul><li> Item<ol>\n<li> Subitem</li></ol></li></ul>"
@@ -90,19 +85,19 @@ var tests = [
   {
     name:   "Ordered list inside unordered list",
     input:  "* Item\n## Subitem",
-    output: "<ul><li> Item<ol>\n<li> Subitem</li></ol></ul>"
+    output: "<ul><li> Item<ol>\n<li> Subitem</li></ol></li></ul>"
   },
-  { // Test hr
+  {
     name:   "Horizontal rule",
     input:  "Some text\n----\nSome more text",
     output: "<p>Some text</p><hr /><p>Some more text</p>"
   },
-  { // Test pre block
+  {
     name:   "Preformatted block",
     input:  "{{{\nPreformatted block\n}}}",
     output: "<pre>Preformatted block\n</pre>"
   },
-  { // Test two pre blocks
+  {
     name:   "Two preformatted blocks",
     input:  "{{{\nPreformatted block\n}}}\n{{{Block 2}}}",
     output: "<pre>Preformatted block\n</pre><p><tt>Block 2</tt></p>"
@@ -117,102 +112,102 @@ var tests = [
     input:  "{{{foo}}}}}}",
     output: "<p><tt>foo}}}</tt></p>"
   },
-  { // Test h1
+  {
     name:   "h1",
     input:  "= Header =",
     output: "<h1>Header</h1>"
   },
-  { // Test h2
+  {
     name:   "h2",
     input:  "== Header =",
     output: "<h2>Header</h2>"
   },
-  { // Test h3
+  {
     name:   "h3",
     input:  "=== Header =",
     output: "<h3>Header</h3>"
   },
-  { // Test h4
+  {
     name:   "h4",
     input:  "==== Header =",
     output: "<h4>Header</h4>"
   },
-  { // Test h5
+  {
     name:   "h5",
     input:  "===== Header",
     output: "<h5>Header</h5>"
   },
-  { // Test h6
+  {
     name:   "h6",
     input:  "====== Header =",
     output: "<h6>Header</h6>"
   },
-  { // Test h1 (no spaces)
+  {
     name:   "h1 (no spaces)",
     input:  "=Header=",
     output: "<h1>Header</h1>"
   },
-  { // Test h2 (no spaces)
+  {
     name:   "h2 (no spaces)",
     input:  "==Header=",
     output: "<h2>Header</h2>"
   },
-  { // Test h3 (no spaces)
+  {
     name:   "h3 (no spaces)",
     input:  "===Header=",
     output: "<h3>Header</h3>"
   },
-  { // Test h4 (no spaces)
+  {
     name:   "h4 (no spaces)",
     input:  "====Header=",
     output: "<h4>Header</h4>"
   },
-  { // Test h5 (no spaces)
+  {
     name:   "h5 (no spaces)",
     input:  "=====Header",
     output: "<h5>Header</h5>"
   },
-  { // Test h6 (no spaces)
+  {
     name:   "h6 (no spaces)",
     input:  "======Header=",
     output: "<h6>Header</h6>"
   },
-  { // Test header-like pattern
+  {
     name:   "header-like",
     input:  "====\n",
     output: "<p>====\n</p>"
   },
-  { // Test above h6 (should be ignored)
+  {
     name:   ">h6",
     input:  "======= Header =",
     output: "<p>======= Header =</p>"
   },
-  { // Test h1 ending with tilde
+  {
     name:   "h1 ending with tilde",
     input:  "= Header ~",
     output: "<h1>Header ~</h1>"
   },
-  { // Test h2 ending with tilde
+  {
     name:   "h2 ending with tilde",
     input:  "== Header ~",
     output: "<h2>Header ~</h2>"
   },
-  { // Test h3 ending with tilde
+  {
     name:   "h3 ending with tilde",
     input:  "=== Header ~",
     output: "<h3>Header ~</h3>"
   },
-  { // Test h4 ending with tilde
+  {
     name:   "h4 ending with tilde",
     input:  "==== Header ~",
     output: "<h4>Header ~</h4>"
   },
-  { // Test h5 ending with tilde
+  {
     name:   "h5 ending with tilde",
     input:  "===== Header ~",
     output: "<h5>Header ~</h5>"
   },
-  { // Test h6 ending with tilde
+  {
     name:   "h6 ending with tilde",
     input:  "====== Header ~",
     output: "<h6>Header ~</h6>"
@@ -249,7 +244,7 @@ var tests = [
             "<tr><td> <tt>//C//</tt> </td>" +
             "<td> <tt>**D** \\\\ E</tt> </td></tr></table>"
   },
-  { // Test raw URL
+  {
     name:   "Raw URL",
     input:  "http://example.com/examplepage",
     output: "<p><a href=\"http://example.com/examplepage\">" +
@@ -261,7 +256,7 @@ var tests = [
     output: "<p><a href=\"http://example.com/~user\">" +
             "http://example.com/~user</a></p>"
   },
-  { // Test unnamed URL
+  {
     name:   "Unnamed URL",
     input:  "[[http://example.com/examplepage]]",
     output: "<p><a href=\"http://example.com/examplepage\">" +
@@ -273,18 +268,18 @@ var tests = [
     output: "<p><a href=\"http://example.com/~user\">" +
             "http://example.com/~user</a></p>"
   },
-  { // Test named URL
+  {
     name:   "Named URL",
     input:  "[[http://example.com/examplepage|Example Page]]",
     output: "<p>" +
             "<a href=\"http://example.com/examplepage\">Example Page</a></p>"
   },
-  { // Test unnamed link
+  {
     name:   "Unnamed link",
     input:  "[[MyPage]]",
     output: "<p><a href=\"/wiki/MyPage\">MyPage</a></p>"
   },
-  { // Test named link
+  {
     name:   "Named link",
     input:  "[[MyPage|My page]]",
     output: "<p><a href=\"/wiki/MyPage\">My page</a></p>"
@@ -299,22 +294,22 @@ var tests = [
     input:  "[[WikiCreole:Creole1.0|Creole 1.0]]",
     output: "<p><a href=\"http://www.wikicreole.org/wiki/Creole1.0\">Creole 1.0</a></p>"
   },
-  { // Test images
+  {
     name:   "Image",
     input:  "{{image.gif|my image}}",
     output: "<p><img alt=\"my image\" src=\"image.gif\"/></p>"
   },
-  { // Test inline tt
+  {
     name:   "Inline tt",
     input:  "Inline {{{tt}}} example {{{here}}}!",
     output: "<p>Inline <tt>tt</tt> example <tt>here</tt>!</p>"
   },
-  { // Test **strong**
+  {
     name:   "Strong",
     input:  "**Strong**",
     output: "<p><strong>Strong</strong></p>"
   },
-  { // Test runaway **strong
+  {
     name:   "Runaway strong #1",
     input:  "**Strong",
     output: "<p><strong>Strong</strong></p>"
@@ -324,12 +319,12 @@ var tests = [
     input:  "** Strong *",
     output: "<p><strong> Strong *</strong></p>"
   },
-  { // Test //emphasis//
+  {
     name:   "Emphasis",
     input:  "//Emphasis//",
     output: "<p><em>Emphasis</em></p>"
   },
-  { // Test runaway //emphasis
+  {
     name:   "Runaway emphasis #1",
     input:  "//Emphasis",
     output: "<p><em>Emphasis</em></p>"
@@ -339,9 +334,7 @@ var tests = [
     input:  "// Emphasis /",
     output: "<p><em> Emphasis /</em></p>"
   },
-
-  //// WikiCreole tests
-  { // Tests multi-line emphasis behaviour
+  {
     name:   "Multi-line emphasis",
     input:  "Bold and italics should //be\nable// to cross lines.\n\n" +
             "But, should //not be...\n\n...able// to cross paragraphs.",
@@ -349,7 +342,7 @@ var tests = [
             "\n</p>" + "<p>\nBut, should <em>not be...\n</em></p>" +
             "<p>\n...able<em> to cross paragraphs.</em></p>"
   },
-  { // Tests URL/emphasis ambiguity handling
+  {
     name:   "URL/emphasis ambiguity",
     input:  "This is an //italic// text. This is a url: " +
             "http://www.wikicreole.org. This is what can go wrong://this " +
@@ -357,10 +350,8 @@ var tests = [
     output: "<p>This is an <em>italic</em> text. This is a url: " +
             "<a href=\"http://www.wikicreole.org\">" +
             "http://www.wikicreole.org</a>. This is what can go wrong:" +
-            "<em>this should be an italic text</em>."
+            "<em>this should be an italic text</em>.</p>"
   },
-
-  //// Awkward emphasis edge cases
   {
     name:   "Difficult emphasis #1",
     input:  "// http://www.link.org //",
@@ -633,42 +624,3 @@ var tests = [
     options: { defaultImageText: 'Image' }
   }
 ];
-
-plan({ tests: tests.length });
-
-for (var i in tests) {
-    var test = tests[i];
-    if (test.forIE && !document.all) {
-        skip('for IE only', 1);
-        continue;
-    }
-
-    var expected = document.createElement('div');
-    expected.innerHTML = test.output;
-    expected = expected.cloneNode(true);
-
-    var options = test.options ? test.options : {};
-    options.forIE = document.all;
-    options.interwiki = {
-            MeatBall: 'http://www.usemod.com/cgi-bin/mb.pl?',
-            WikiCreole: 'http://www.wikicreole.org/wiki/',
-            Palindrome: function(link) {
-                    return 'http://www.example.com/wiki/' + link.split('').reverse().join('');
-                }
-        };
-    options.linkFormat = '/wiki/';
-    
-    var div = document.createElement('div');
-    var c = new creole(options);
-
-    c.parse(div, test.input, options);
-    
-    div.innerHTML = div.innerHTML;
-    div = div.cloneNode(true);
-
-    is(div.innerHTML, expected.innerHTML, test.name);
-}
-//]]>--></script>
-</pre>
-</body>
-</html>

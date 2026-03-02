@@ -1,14 +1,31 @@
 {
   "name": "jscreole",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "A JavaScript library for parsing Creole 1.0 wiki markup.",
-  "main": "lib/creole.js",
-  "directories": {
-    "test": "tests"
+  "type": "module",
+  "main": "./dist/creole.cjs",
+  "module": "./dist/creole.mjs",
+  "types": "./dist/creole.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/creole.d.ts",
+        "default": "./dist/creole.mjs"
+      },
+      "require": {
+        "types": "./dist/creole.d.cts",
+        "default": "./dist/creole.cjs"
+      }
+    }
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "mocha  --compilers coffee:coffee-script/register --recursive tests/node",
-    "test-watch": "npm run test -- -w"
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -16,17 +33,22 @@
   },
   "keywords": [
     "wikitext",
-    "jscreole"
+    "creole",
+    "wiki",
+    "markup",
+    "parser"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/codeholic/jscreole/issues"
   },
   "homepage": "https://github.com/codeholic/jscreole",
+  "packageManager": "pnpm@9.15.4",
   "devDependencies": {
-    "coffee-script": "^1.9.0",
-    "fluentnode": "^0.3.4",
-    "jsdom": "^3.1.0",
-    "mocha": "^2.1.0"
+    "@types/jsdom": "^28.0.0",
+    "jsdom": "^28.1.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
   }
 }
