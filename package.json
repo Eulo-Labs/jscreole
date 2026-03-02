@@ -1,5 +1,5 @@
 {
-  "name": "jscreole",
+  "name": "@eulolabs/jscreole",
   "version": "1.0.0",
   "description": "A JavaScript library for parsing Creole 1.0 wiki markup.",
   "type": "module",
@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/codeholic/jscreole"
+    "url": "https://github.com/Eulo-Labs/jscreole"
   },
   "keywords": [
     "wikitext",
@@ -39,10 +39,11 @@
     "parser"
   ],
   "license": "MIT",
+  "author": "Ivan Fomichev (https://github.com/codeholic)",
   "bugs": {
-    "url": "https://github.com/codeholic/jscreole/issues"
+    "url": "https://github.com/Eulo-Labs/jscreole/issues"
   },
-  "homepage": "https://github.com/codeholic/jscreole",
+  "homepage": "https://github.com/Eulo-Labs/jscreole",
   "packageManager": "pnpm@9.15.4",
   "devDependencies": {
     "@types/jsdom": "^28.0.0",
